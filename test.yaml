@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-dep
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        
+      maxUnavailable: 1  
+  selector:
+    matchLabels:
+      app: tugasNet
+  template:
+    metadata:
+      labels:
+        app: tugasNet
+    spec:
+      containers:
+      - name: tugasNet
+        image: karenaud/webapp:0.0
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
